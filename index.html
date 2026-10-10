@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gym ID Card Registration</title>
+    <link rel="stylesheet" href="./style/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto+Condensed:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <form id="registration-form" class="registration-form">
+      <h1>Create your gym ID card</h1>
+      <label for="card-name">Name</label>
+      <input id="card-name" name="name" type="text" maxlength="120" required />
+
+      <label for="blood-group">Blood group</label>
+      <input
+        id="blood-group"
+        name="bloodGroup"
+        type="text"
+        maxlength="8"
+        placeholder="B+"
+        required
+      />
+
+      <label for="phone-number">Phone number</label>
+      <input
+        id="phone-number"
+        name="phoneNumber"
+        type="tel"
+        maxlength="24"
+        placeholder="+91 9876543210"
+        required
+      />
+
+      <label for="valid-until-input">Card valid through</label>
+      <input id="valid-until-input" name="validUntil" type="month" required />
+
+      <label for="profile-pic"
+        >Profile picture (JPEG, PNG, or GIF; up to 5 MB)</label
+      >
+      <input
+        id="profile-pic"
+        name="profilePic"
+        type="file"
+        accept="image/jpeg,image/png,image/gif"
+        required
+      />
+
+      <button type="submit">Create ID card</button>
+      <p id="registration-status" role="status" aria-live="polite"></p>
+    </form>
+
+    <main id="card-preview" class="card-preview" hidden>
+      <div class="card-actions">
+        <p id="card-status" role="status" aria-live="polite"></p>
+        <button id="download-pdf" type="button">Download card as PDF</button>
+      </div>
+      <div id="card-sheet" class="card-sheet">
+        <div class="card1" id="card-front">
+          <div class="container-first">
+            <div class="header">
+              <div class="logo">
+                <img
+                  src="./assest/Seal_of_Odisha.png__18188__thumb.png"
+                  alt="logo"
+                />
+
+                <div class="text">
+                  Sports &amp; Youth Services Department
+                  <p class="description">Government of Odisha</p>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+              <div
+                class="profile-img"
+                role="img"
+                aria-label="Profile picture"
+              ></div>
+              <div class="context">
+                <div class="name">Your name</div>
+                <div class="section">
+                  <div class="id">
+                    <img
+                      src="./assest/Gemini_Generated_Image_3wu6ef3wu6ef3wu6.png"
+                      class="id-img"
+                      alt="id"
+                    />
+                    <div class="id-details">
+                      <span class="gym-id">GY0000521234</span>
+                      <span class="blood-group-separator" aria-hidden="true"
+                        >|</span
+                      >
+                      <img
+                        src="./assest/blood-drop.png"
+                        style="width: 20px; height: 20px"
+                        alt="Blood group"
+                      />
+                      <span class="blood-group-value">B+</span>
+                    </div>
+                  </div>
+                  <div class="id id-number">
+                    <img
+                      src="./assest/design-icon-or-symbol-of-mobile-phone-shape-free-vector.webp"
+                      class="id-img phn-icon"
+                      alt="number"
+                    />
+                    <p class="phone-number-value">+91 9876543210</p>
+                  </div>
+                  <div class="id id-date">
+                    <img
+                      src="./assest/verified-icon-illustration-guaranteed-stamp-or-verified-badge-trendy-design-vector.webp"
+                      class="id-img"
+                      alt="date"
+                    />
+                    <span
+                      >Valid for:
+                      <span class="valid-until">Oct 2026</span></span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="footer-nav">
+              <div class="box">
+                <div class="txt1">Gym</div>
+                <div class="txt2">Recreational</div>
+              </div>
+            </div>
+            <div class="main-footer">
+              <div class="footer-txt">
+                <div class="footer-container">
+                  <div class="first-half">PAY &amp;</div>
+                  <div class="second-half">PLAY</div>
+                </div>
+                <div class="sub-text">
+                  Sports &amp; Youth Services Department
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card2" id="card-back">
+          <div class="container-first">
+            <div class="header2">
+              <div class="logo">
+                <img
+                  src="./assest/Seal_of_Odisha.png__18188__thumb.png"
+                  alt="logo"
+                />
+
+                <div class="text">
+                  Sports &amp; Youth Services Department
+                  <p class="description">Government of Odisha</p>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+              <div class="qr-code">
+                <img
+                  src="./assest/Screenshot 2026-10-09 160858.png"
+                  alt="qr-code"
+                />
+              </div>
+              <div class="venue">
+                <div class="location">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p class="venue-location">Cuttack, Nuabazar, MPIS</p>
+                </div>
+                <div class="time">
+                  <div class="venue-box">EVENING</div>
+                  <p>
+                    <i class="fa-regular fa-clock"></i>
+                    <span class="venue-time-slot">7:00 PM - 8:00 PM</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="footer-nav nav-2">
+              <div class="box">
+                <div class="txt1">Gym</div>
+                <div class="txt2">Recreational</div>
+              </div>
+            </div>
+            <div class="main-footer">
+              <div class="footer-txt">
+                <div class="footer-container">
+                  <div class="first-half">PAY &amp;</div>
+                  <div class="second-half">PLAY</div>
+                </div>
+                <div class="sub-text">
+                  Sports &amp; Youth Services Department
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+    <script>
+      const registrationForm = document.querySelector("#registration-form");
+      const registrationStatus = document.querySelector("#registration-status");
+      const cardPreview = document.querySelector("#card-preview");
+      const cardStatus = document.querySelector("#card-status");
+      const downloadButton = document.querySelector("#download-pdf");
+      const validUntilInput = document.querySelector("#valid-until-input");
+      const toMonthInputValue = (date) =>
+        `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+      const currentMonth = new Date();
+      validUntilInput.min = toMonthInputValue(currentMonth);
+      validUntilInput.value = toMonthInputValue(
+        new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1),
+      );
+      const apiBaseUrl =
+        window.location.port === "5500"
+          ? `${window.location.protocol}//${window.location.hostname}:8080`
+          : window.location.origin;
+
+      downloadButton.addEventListener("click", async () => {
+        downloadButton.disabled = true;
+        cardStatus.textContent = "Preparing your PDF...";
+
+        try {
+          if (
+            typeof window.html2canvas !== "function" ||
+            !window.jspdf?.jsPDF
+          ) {
+            throw new Error(
+              "The PDF tools could not be loaded. Check your internet connection and try again.",
+            );
+          }
+
+          const canvas = await window.html2canvas(
+            document.querySelector("#card-sheet"),
+            {
+              backgroundColor: "#ffffff",
+              scale: 2,
+              useCORS: true,
+            },
+          );
+          const widthMm = (canvas.width * 25.4) / (96 * 2);
+          const heightMm = (canvas.height * 25.4) / (96 * 2);
+          const pdf = new window.jspdf.jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: [widthMm, heightMm],
+          });
+          pdf.addImage(
+            canvas.toDataURL("image/jpeg", 0.95),
+            "JPEG",
+            0,
+            0,
+            widthMm,
+            heightMm,
+          );
+
+          const gymId = document.querySelector(".gym-id").textContent.trim();
+          pdf.save(`gym-card-${gymId}.pdf`);
+          cardStatus.textContent =
+            "Your full card layout PDF has been downloaded.";
+        } catch (error) {
+          cardStatus.textContent =
+            error.message || "Could not create the PDF. Please try again.";
+        } finally {
+          downloadButton.disabled = false;
+        }
+      });
+
+      registrationForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        registrationStatus.textContent = "Creating your card...";
+        registrationForm.querySelector("button").disabled = true;
+
+        try {
+          const response = await fetch(`${apiBaseUrl}/api/cards/register`, {
+            method: "POST",
+            body: new FormData(registrationForm),
+          });
+          const responseBody = await response.text();
+          let card;
+          try {
+            card = responseBody ? JSON.parse(responseBody) : {};
+          } catch {
+            throw new Error(
+              `The registration server returned an invalid response (HTTP ${response.status}). ` +
+                "Make sure the Spring Boot API is running on port 8080.",
+            );
+          }
+
+          if (!response.ok) {
+            throw new Error(
+              card?.message ||
+                card?.detail ||
+                `Registration failed (HTTP ${response.status}). Please try again.`,
+            );
+          }
+          if (
+            !card ||
+            typeof card !== "object" ||
+            !card.gymId ||
+            !card.name ||
+            !card.profilePicPath
+          ) {
+            throw new Error(
+              "The registration response is missing card details. Please try again.",
+            );
+          }
+
+          document.querySelector(".gym-id").textContent = card.gymId;
+          document.querySelector(".name").textContent = card.name;
+          document.querySelector(".phone-number-value").textContent =
+            card.phoneNumber;
+          document.querySelector(".blood-group-value").textContent =
+            card.bloodGroup;
+          document.querySelector(".valid-until").textContent = card.validUntil;
+          document.querySelector(".venue-location").textContent =
+            card.venueLocation;
+          document.querySelector(".venue-time-slot").textContent =
+            card.venueTimeSlot;
+          const profileImage = document.querySelector(".profile-img");
+          profileImage.style.backgroundImage = `url("${URL.createObjectURL(
+            registrationForm.elements.profilePic.files[0],
+          )}")`;
+          profileImage.setAttribute(
+            "aria-label",
+            `Profile picture of ${card.name}`,
+          );
+          registrationForm.hidden = true;
+          cardPreview.hidden = false;
+          cardStatus.textContent = `Your card is ready. Gym ID: ${card.gymId}.`;
+          cardPreview.scrollIntoView({ behavior: "smooth", block: "start" });
+        } catch (error) {
+          registrationStatus.textContent =
+            error instanceof TypeError
+              ? "Could not reach the registration API. Open this page from Spring Boot at http://localhost:8080/index.html and try again."
+              : error.message || "Could not create your card.";
+        } finally {
+          registrationForm.querySelector("button").disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
