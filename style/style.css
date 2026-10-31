@@ -167,8 +167,8 @@ body {
   height: auto;
   transform: translateX(-30%);
   opacity: 0.1;
-  filter: brightness() saturate(100%) invert(75%) sepia(10%) saturate(700%)
-    hue-rotate(170deg) brightness(100%) contrast(85%);
+  filter: brightness(0.7) saturate(100%) invert(75%) sepia(10%) saturate(700%)
+    hue-rotate(170deg) contrast(85%);
   pointer-events: none;
   user-select: none;
   z-index: 0;

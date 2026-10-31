@@ -304,6 +304,17 @@
             backgroundColor: "#ffffff",
             scale: 2,
             useCORS: true,
+            onclone: (clonedDocument) => {
+              const watermark = clonedDocument.querySelector(".watermark");
+              if (watermark) {
+                const sourceStyles = window.getComputedStyle(
+                  cardSheet.querySelector(".watermark"),
+                );
+                watermark.style.filter = sourceStyles.filter;
+                watermark.style.opacity = sourceStyles.opacity;
+                watermark.style.transform = sourceStyles.transform;
+              }
+            },
           });
           const widthMm = (canvas.width * 25.4) / (96 * 2);
           const heightMm = (canvas.height * 25.4) / (96 * 2);
