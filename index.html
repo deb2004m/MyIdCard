@@ -91,6 +91,12 @@
               </div>
             </div>
             <div class="body">
+              <img
+                src="./assest/Pastel_Abstract_Activity_Emblem-removebg-preview.png"
+                class="watermark"
+                alt=""
+                aria-hidden="true"
+              />
               <div
                 class="profile-img"
                 role="img"
@@ -127,11 +133,7 @@
                     <p class="phone-number-value">+91 9876543210</p>
                   </div>
                   <div class="id id-date">
-                    <img
-                      src="./assest/verified-icon-illustration-guaranteed-stamp-or-verified-badge-trendy-design-vector.webp"
-                      class="id-img"
-                      alt="date"
-                    />
+                    <img src="./assest/green.png" class="id-img" alt="date" />
                     <span
                       >Valid for:
                       <span class="valid-until">Oct 2026</span></span
@@ -237,6 +239,51 @@
           ? `${window.location.protocol}//${window.location.hostname}:8080`
           : window.location.origin;
 
+      const waitForCardImages = async (cardSheet) => {
+        const images = [...cardSheet.querySelectorAll("img")];
+        await Promise.all(
+          images.map(async (image) => {
+            if (image.complete && image.naturalWidth === 0) {
+              throw new Error(`Could not load ${image.alt || "card image"}.`);
+            }
+            if (!image.complete) {
+              await new Promise((resolve, reject) => {
+                image.addEventListener("load", resolve, { once: true });
+                image.addEventListener(
+                  "error",
+                  () =>
+                    reject(
+                      new Error(`Could not load ${image.alt || "card image"}.`),
+                    ),
+                  { once: true },
+                );
+              });
+            }
+            if (image.decode) {
+              await image.decode();
+            }
+          }),
+        );
+
+        const profileImage = cardSheet.querySelector(".profile-img");
+        const profileBackground =
+          getComputedStyle(profileImage).backgroundImage;
+        if (profileBackground && profileBackground !== "none") {
+          const imageUrl = profileBackground.match(
+            /url\(["']?(.*?)["']?\)/,
+          )?.[1];
+          if (imageUrl) {
+            await new Promise((resolve, reject) => {
+              const image = new Image();
+              image.onload = resolve;
+              image.onerror = () =>
+                reject(new Error("Could not load the profile picture."));
+              image.src = imageUrl;
+            });
+          }
+        }
+      };
+
       downloadButton.addEventListener("click", async () => {
         downloadButton.disabled = true;
         cardStatus.textContent = "Preparing your PDF...";
@@ -251,14 +298,13 @@
             );
           }
 
-          const canvas = await window.html2canvas(
-            document.querySelector("#card-sheet"),
-            {
-              backgroundColor: "#ffffff",
-              scale: 2,
-              useCORS: true,
-            },
-          );
+          const cardSheet = document.querySelector("#card-sheet");
+          await waitForCardImages(cardSheet);
+          const canvas = await window.html2canvas(cardSheet, {
+            backgroundColor: "#ffffff",
+            scale: 2,
+            useCORS: true,
+          });
           const widthMm = (canvas.width * 25.4) / (96 * 2);
           const heightMm = (canvas.height * 25.4) / (96 * 2);
           const pdf = new window.jspdf.jsPDF({
@@ -267,8 +313,8 @@
             format: [widthMm, heightMm],
           });
           pdf.addImage(
-            canvas.toDataURL("image/jpeg", 0.95),
-            "JPEG",
+            canvas.toDataURL("image/png"),
+            "PNG",
             0,
             0,
             widthMm,
