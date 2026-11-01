@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.YearMonth;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Iterator;
@@ -30,6 +31,8 @@ public class CardService {
 
     private static final DateTimeFormatter VALIDITY_FORMATTER =
             DateTimeFormatter.ofPattern("MMM uuuu", Locale.ENGLISH);
+    private static final DateTimeFormatter TIME_FORMATTER =
+            DateTimeFormatter.ofPattern("h:mm a", Locale.ENGLISH);
 
     private final CardRepository cardRepository;
     private final Path uploadDirectory;
@@ -47,11 +50,16 @@ public class CardService {
             String bloodGroup,
             String phoneNumber,
             String validUntil,
+            String preferredHour,
+            String preferredMinute,
+            String preferredPeriod,
             MultipartFile profilePic) {
         String cleanedName = requireText(name, "Name", 120);
         String cleanedBloodGroup = requireText(bloodGroup, "Blood group", 8);
         String cleanedPhoneNumber = requireText(phoneNumber, "Phone number", 24);
         String formattedValidUntil = normalizeValidityMonth(validUntil);
+        String formattedTimeSlot = normalizePreferredTime(
+                preferredHour, preferredMinute, preferredPeriod);
         String extension = validateImage(profilePic);
         String fileName = UUID.randomUUID() + "." + extension;
         Path storedImage = storeImage(profilePic, fileName);
@@ -62,6 +70,7 @@ public class CardService {
             card.setBloodGroup(cleanedBloodGroup);
             card.setPhoneNumber(cleanedPhoneNumber);
             card.setValidUntil(formattedValidUntil);
+            card.setVenueTimeSlot(formattedTimeSlot);
             card.setProfilePicPath("/uploads/" + fileName);
 
             for (int attempt = 0; attempt < MAX_GYM_ID_ATTEMPTS; attempt++) {
@@ -80,6 +89,36 @@ public class CardService {
                 exception.addSuppressed(cleanupException);
             }
             throw exception;
+        }
+    }
+
+    public UserCard register(
+            String name,
+            String bloodGroup,
+            String phoneNumber,
+            String validUntil,
+            MultipartFile profilePic) {
+        return register(name, bloodGroup, phoneNumber, validUntil,
+                "7", "00", "PM", profilePic);
+    }
+
+    static String normalizePreferredTime(String hour, String minute, String period) {
+        if (hour == null || minute == null || period == null
+                || !hour.matches("(?:[1-9]|1[0-2])")
+                || !minute.matches("[0-5]?[0-9]")
+                || (!period.equals("AM") && !period.equals("PM"))) {
+            throw new IllegalArgumentException("Preferred time must be a valid 12-hour time.");
+        }
+
+        try {
+            int minuteValue = Integer.parseInt(minute);
+            LocalTime start = LocalTime.parse(
+                    hour + ":" + String.format("%02d", minuteValue) + " " + period,
+                    TIME_FORMATTER);
+            LocalTime end = start.plusHours(1);
+            return start.format(TIME_FORMATTER) + " - " + end.format(TIME_FORMATTER);
+        } catch (DateTimeParseException exception) {
+            throw new IllegalArgumentException("Preferred time must be a valid 12-hour time.");
         }
     }
 

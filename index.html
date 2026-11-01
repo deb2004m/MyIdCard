@@ -54,6 +54,41 @@
       <label for="valid-until-input">Card valid through</label>
       <input id="valid-until-input" name="validUntil" type="month" required />
 
+      <label for="preferred-hour">Preferred time</label>
+      <div class="time-selection">
+        <select id="preferred-hour" name="preferredHour" aria-label="Hour" required>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7" selected>7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+        <span aria-hidden="true">:</span>
+        <input
+          id="preferred-minute"
+          name="preferredMinute"
+          type="number"
+          min="0"
+          max="59"
+          step="1"
+          value="0"
+          inputmode="numeric"
+          aria-label="Minutes"
+          required
+        />
+        <select id="preferred-period" name="preferredPeriod" aria-label="AM or PM" required>
+          <option value="AM">AM</option>
+          <option value="PM" selected>PM</option>
+        </select>
+      </div>
+
       <label for="profile-pic"
         >Profile picture (JPEG, PNG, or GIF; up to 5 MB)</label
       >

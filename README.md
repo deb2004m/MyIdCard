@@ -20,7 +20,7 @@ The local `.env` file is ignored by Git and the launcher restricts its Windows f
 
 ## API
 
-- `POST /api/cards/register` — multipart fields `name`, `bloodGroup`, `phoneNumber`, `validUntil` (`YYYY-MM`, optional for API clients; defaults to next month), and `profilePic`; returns the created card JSON with HTTP 201.
+- `POST /api/cards/register` — multipart fields `name`, `bloodGroup`, `phoneNumber`, `preferredHour` (`1`-`12`), `preferredMinute` (`00`-`59`), `preferredPeriod` (`AM` or `PM`), `validUntil` (`YYYY-MM`, optional for API clients; defaults to next month), and `profilePic`; returns the created card JSON with HTTP 201.
 - `GET /api/cards/{gymId}` — returns a card by its generated gym ID.
 - `GET /uploads/{filename}` — serves a stored profile picture.
 

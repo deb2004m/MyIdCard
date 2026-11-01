@@ -32,4 +32,22 @@ class CardServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> CardService.normalizeValidityMonth(YearMonth.now().minusMonths(1).toString()));
     }
+
+    @Test
+    void formatsPreferredTimeAsOneHourSlot() {
+        assertEquals("11:45 AM - 12:45 PM",
+                CardService.normalizePreferredTime("11", "45", "AM"));
+        assertEquals("12:30 PM - 1:30 PM",
+                CardService.normalizePreferredTime("12", "30", "PM"));
+    }
+
+    @Test
+    void rejectsInvalidPreferredTimes() {
+        assertThrows(IllegalArgumentException.class,
+                () -> CardService.normalizePreferredTime("13", "00", "PM"));
+        assertThrows(IllegalArgumentException.class,
+                () -> CardService.normalizePreferredTime("7", "60", "PM"));
+        assertThrows(IllegalArgumentException.class,
+                () -> CardService.normalizePreferredTime("7", "00", "XX"));
+    }
 }

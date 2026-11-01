@@ -32,8 +32,13 @@ public class CardController {
             @RequestParam String bloodGroup,
             @RequestParam String phoneNumber,
             @RequestParam(required = false) String validUntil,
+            @RequestParam(defaultValue = "7") String preferredHour,
+            @RequestParam(defaultValue = "00") String preferredMinute,
+            @RequestParam(defaultValue = "PM") String preferredPeriod,
             @RequestParam MultipartFile profilePic) {
-        return cardService.register(name, bloodGroup, phoneNumber, validUntil, profilePic);
+        return cardService.register(
+                name, bloodGroup, phoneNumber, validUntil,
+                preferredHour, preferredMinute, preferredPeriod, profilePic);
     }
 
     @GetMapping("/{gymId}")

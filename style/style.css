@@ -31,12 +31,25 @@ body {
 .registration-form label {
   font-weight: 600;
 }
-.registration-form input {
+.registration-form input,
+.registration-form select {
   width: 100%;
   min-height: 40px;
   padding: 8px;
   border: 1px solid #aaa;
   border-radius: 5px;
+  background: #fff;
+  font: inherit;
+}
+.time-selection {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr 1.15fr;
+  align-items: center;
+  gap: 6px;
+}
+.time-selection span {
+  color: #555;
+  font-weight: 700;
 }
 .registration-form button {
   min-height: 42px;
